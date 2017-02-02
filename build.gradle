@@ -11,6 +11,12 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.github.pokegeeks.Main'
+    }
+}
+
 repositories {
     mavenCentral()
     jcenter()
