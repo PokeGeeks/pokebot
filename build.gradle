@@ -1,15 +1,30 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'idea'
+apply plugin: 'application'
+
 group 'com.github.pokegeeks'
 version '0.0.1-SNAPSHOT'
 
-task wrapper(type: Wrapper) {
-  gradleVersion = '3.1'
-  distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
 }
 
-apply plugin: 'java'
+mainClassName = "com.github.pokegeeks.Main"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile "io.reactivex.rxjava2:rxjava:2.0.5"
+    compile 'com.pokegoapi:PokeGOAPI-library:0.4.1'
+}
+
+idea {
+    module {
+        jdkName = '1.8'
+    }
+}
 
 jar {
     manifest {
@@ -17,12 +32,21 @@ jar {
     }
 }
 
-repositories {
-    mavenCentral()
-    jcenter()
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile "io.reactivex.rxjava2:rxjava:2.0.5"
+artifacts {
+    archives sourcesJar
 }
+
+run{
+    standardInput = System.in
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.1'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
