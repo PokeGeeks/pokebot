@@ -16,8 +16,8 @@ mainClassName = "com.github.pokegeeks.Main"
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile "io.reactivex.rxjava2:rxjava:2.0.5"
-    compile 'com.pokegoapi:PokeGOAPI-library:0.4.1'
 }
 
 idea {
